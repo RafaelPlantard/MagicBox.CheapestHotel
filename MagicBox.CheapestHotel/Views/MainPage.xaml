@@ -8,7 +8,17 @@
     mvvm:ViewModelLocator.AutoWireViewModel="True"
     x:Class="MagicBox.CheapestHotel.Views.MainPage">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="10">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Button Command="{Binding ReadFileCommand}" Content="Open a file" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+        <ListView Grid.Row="2" ItemsSource="{Binding ResultHotelChoices}" ItemTemplate="{ThemeResource HotelsChoiceItemTemplate}" />
 
     </Grid>
     

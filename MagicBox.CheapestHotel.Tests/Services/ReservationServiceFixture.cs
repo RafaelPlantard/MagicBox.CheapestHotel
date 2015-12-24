@@ -71,14 +71,16 @@ namespace MagicBox.CheapestHotel.Tests.Services
                         new DateTime(2009, 03, 27),
                         new DateTime(2009, 03, 28),
                     }
-                },
+                }
             };
 
             for (var i = 0; i < mockedValues.Length; i++)
             {
                 var actual = _reservationService.ConvertToCustomerInputFromTextLine(mockedValues[i]);
 
-                System.Diagnostics.Debug.WriteLine("here");
+                Assert.IsNotNull(actual);
+
+                Assert.AreEqual(expectedValues[i].Customer, (i < 2) ? CustomerType.Regular : CustomerType.Rewards);
 
                 Assert.AreEqual(expectedValues[i], actual);
             }

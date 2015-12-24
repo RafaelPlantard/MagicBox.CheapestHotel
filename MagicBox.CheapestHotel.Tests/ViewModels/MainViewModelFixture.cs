@@ -12,21 +12,24 @@ namespace MagicBox.CheapestHotel.Tests.ViewModels
     [TestClass]
     public class MainViewModelFixture : ITestable
     {
+        private IAlertMessageService _alertMessageService;
         private IFileReaderService _fileReaderService;
-        private IMainViewModel _mainViewModel;
+        private IMainPageViewModel _mainViewModel;
         private IReservationService _reservationService;
 
         [TestInitialize]
         public void Initialize()
         {
+            _alertMessageService = new AlertMessageService();
             _fileReaderService = new FileReaderService();
             _reservationService = new ReservationService(_fileReaderService);
-            _mainViewModel = new MainViewModel(_reservationService);
+            _mainViewModel = new MainPageViewModel(_alertMessageService, _reservationService);
         }
 
         [TestMethod]
         public void VerifyInitialization()
         {
+            Assert.IsNotNull(_alertMessageService);
             Assert.IsNotNull(_fileReaderService);
             Assert.IsNotNull(_reservationService);
             Assert.IsNotNull(_mainViewModel);

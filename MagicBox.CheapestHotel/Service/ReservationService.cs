@@ -1,10 +1,11 @@
 ﻿using MagicBox.CheapestHotel.Entities;
 using MagicBox.CheapestHotel.Models;
+using MagicBox.UWP.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using MagicBox.UWP.Services;
 
 namespace MagicBox.CheapestHotel.Service
 {
@@ -46,17 +47,15 @@ namespace MagicBox.CheapestHotel.Service
 
             var customerTypeString = text.Substring(0, positionOfColon);
 
-            var dates = text.Substring(positionOfColon).Split(',');
-            var dateTimes = dates.Select(Convert.ToDateTime);
-
             CustomerType customerType;
-
             Enum.TryParse(customerTypeString, true, out customerType);
+
+            var dates = text.Substring(positionOfColon + 1).Split(',');
 
             return new CustomerInput
             {
                 Customer = customerType,
-                DatesToReserve = dateTimes
+                DatesToReserve = ConvertDatesStringsToObjects(dates)
             };
         }
 
@@ -71,7 +70,6 @@ namespace MagicBox.CheapestHotel.Service
             var minValueToPay = hotelsToPay.Min(h => h.TotalValue);
 
             var hotelsToEval = hotelsToPay.Where(h => h.TotalValue == minValueToPay).ToList();
-
 
             if (hotelsToEval.Count <= 1)
             {
@@ -90,6 +88,15 @@ namespace MagicBox.CheapestHotel.Service
             var usersInput = linesFromFile.Select(ConvertToCustomerInputFromTextLine).ToList();
 
             return usersInput.Select(ResolveCheapestHotel);
+        }
+
+        private IEnumerable<DateTime> ConvertDatesStringsToObjects(string[] dates)
+        {
+            const string patternToDayOfWeek = @"\(.*\)";
+
+            dates = dates.Select(date => Regex.Replace(date, patternToDayOfWeek, string.Empty)).ToArray();
+
+            return dates.Select(Convert.ToDateTime);
         }
 
         private bool IsWeekend(DateTime dateTime)

@@ -30,6 +30,7 @@ namespace MagicBox.CheapestHotel
             base.ConfigureContainer();
 
             // Register the services that app is using.
+            RegisterTypeIfMissing(typeof(IAlertMessageService), typeof(AlertMessageService), true);
             RegisterTypeIfMissing(typeof(IFileReaderService), typeof(FileReaderService), true);
             RegisterTypeIfMissing(typeof(IReservationService), typeof(ReservationService), true);
         }

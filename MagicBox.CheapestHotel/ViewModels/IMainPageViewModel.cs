@@ -7,7 +7,7 @@ namespace MagicBox.CheapestHotel.ViewModels
     /// <summary>
     /// Defines the properties and commands that the Main view model must to have.
     /// </summary>
-    public interface IMainViewModel
+    public interface IMainPageViewModel
     {
         /// <summary>
         /// Call the File Picker to the user select a text file.
