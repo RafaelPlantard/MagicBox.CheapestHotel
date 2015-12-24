@@ -16,7 +16,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Command="{Binding ReadFileCommand}" Content="Open a file" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Button Command="{Binding ReadFileCommand}" Content="Open a file" HorizontalAlignment="Stretch" />
 
         <ListView Grid.Row="2" ItemsSource="{Binding ResultHotelChoices}" ItemTemplate="{ThemeResource HotelsChoiceItemTemplate}" />
 
